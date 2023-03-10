@@ -13,6 +13,10 @@ const routes = [
         name: 'homepage',
         component: () => import('@/views/HomePage.vue'),
     },
+    {
+        path: '/:pathMatch(.*)*',
+        component: () => import('@/views/notfound/NotFound'),
+    },
 ]
 
 const router = createRouter({

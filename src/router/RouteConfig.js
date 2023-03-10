@@ -41,6 +41,10 @@ const routes = [
         path: '/product-manage/productlist',
         component: ProductList,
     },
+    {
+        path: '/',
+        redirect: '/home',
+    },
 ]
 
 export default routes
