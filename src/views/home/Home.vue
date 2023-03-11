@@ -1,6 +1,5 @@
 <template>
-    <div>tabbar</div>
-    <div>main</div>
+    <div>主页</div>
 </template>
 
 <script>
