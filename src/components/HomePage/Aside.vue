@@ -1,6 +1,12 @@
 <template>
-    <el-aside :width="$store.state.isCollapse ? '64px' : '180px'">
-        <p class="siteTitle">企业门户管理</p>
+    <el-aside :width="$store.state.isCollapse ? '64px' : '200px'">
+        <p class="siteTitle">
+            <img
+                src="../../assets/logo.png"
+                alt=""
+            />
+            <span v-show="!$store.state.isCollapse">企业门户管理</span>
+        </p>
         <el-menu
             :collapse="$store.state.isCollapse"
             :router="true"
@@ -73,12 +79,26 @@
 <script setup>
     import { HomeFilled, Avatar, UserFilled, TrendCharts, GoodsFilled, Menu, Pointer } from '@element-plus/icons-vue'
     import { useRoute } from 'vue-router'
+    import { useStore } from 'vuex'
+
+    const store = useStore()
     const route = useRoute()
 </script>
 
 <style lang="scss" scope>
+    .el-aside {
+        background-color: #304156;
+        height: 100vh;
+        transition: 0.3s;
+        .el-menu {
+            background-color: #304156;
+            border: #304156;
+        }
+        box-shadow: 2px 0 6px rgb(0 21 41 / 35%);
+    }
     .siteTitle {
         font-weight: bold;
+        font-size: 14px;
         text-align: center;
         height: 56px;
         line-height: 56px;
@@ -88,22 +108,23 @@
         top: 0;
         left: 0;
         z-index: 10;
-    }
-    .el-aside {
-        background-color: #304156;
-        height: 100vh;
-        transition: 0.3s;
-        .el-menu {
-            background-color: #304156;
-            border: #304156;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        span {
+            margin-left: 10px;
         }
-    }
-    .el-menu-item:hover,
-    .el-sub-menu__title:hover {
-        background-color: #2d3d51;
+        img {
+            width: 20px;
+        }
     }
     .el-sub-menu .el-menu-item {
         background-color: #1f2d3d;
+    }
+    .el-menu-item:hover,
+    .el-sub-menu__title:hover {
+        background-color: #2d3d52;
     }
     .el-sub-menu .el-menu-item:hover {
         background-color: #001528;
