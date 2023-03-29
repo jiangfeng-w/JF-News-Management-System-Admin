@@ -1,12 +1,16 @@
 <template>
     <el-aside :width="$store.state.isCollapse ? '64px' : '200px'">
-        <p class="siteTitle">
+        <p
+            class="siteTitle"
+            @click="goHome"
+        >
             <img
                 src="../../assets/logo.png"
                 alt=""
             />
             <span v-show="!$store.state.isCollapse">企业门户管理</span>
         </p>
+        <!-- 导航菜单 -->
         <el-menu
             :collapse="$store.state.isCollapse"
             :router="true"
@@ -20,10 +24,10 @@
             </el-menu-item>
 
             <!-- 个人中心 -->
-            <el-menu-item index="/center">
+            <!-- <el-menu-item index="/center">
                 <el-icon><Avatar /></el-icon>
                 <span>个人中心</span>
-            </el-menu-item>
+            </el-menu-item> -->
 
             <!-- 用户管理 -->
             <el-sub-menu index="/user-manage">
@@ -78,21 +82,27 @@
 
 <script setup>
     import { HomeFilled, Avatar, UserFilled, TrendCharts, GoodsFilled, Menu, Pointer } from '@element-plus/icons-vue'
-    import { useRoute } from 'vue-router'
+    import { useRoute, useRouter } from 'vue-router'
     import { useStore } from 'vuex'
 
     const store = useStore()
     const route = useRoute()
+    const router = useRouter()
+
+    // 点击导航到首页
+    const goHome = () => {
+        router.push('/home')
+    }
 </script>
 
 <style lang="scss" scope>
     .el-aside {
         background-color: #304156;
-        height: 100vh;
         transition: 0.3s;
         .el-menu {
             background-color: #304156;
             border: #304156;
+            height: 100%;
         }
         box-shadow: 2px 0 6px rgb(0 21 41 / 35%);
     }

@@ -13,4 +13,8 @@
     import Header from '@/components/HomePage/Header.vue'
 </script>
 
-<style></style>
+<style scope>
+    .el-container {
+        height: 100%;
+    }
+</style>

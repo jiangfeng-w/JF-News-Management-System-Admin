@@ -53,6 +53,8 @@
     import { reactive, ref } from 'vue'
     import { useRouter } from 'vue-router'
     import { User, Lock } from '@element-plus/icons-vue'
+    import axios from 'axios'
+    import { useStore } from 'vuex'
 
     //登录表单
     const loginForm = reactive({
@@ -68,17 +70,23 @@
     })
 
     const router = useRouter()
+    const store = useStore()
     // 提交表单
     const submitForm = () => {
         // 表单校验
         loginFormRef.value.validate(isValid => {
-            // 校验失败
-            if (!isValid) {
-                return ElMessage.error('请正确输入用户名和密码')
+            if (isValid) {
+                axios.post('/admin/user/login', loginForm).then(res => {
+                    // console.log(res.data)
+                    if (res.data.ActionType === 'OK') {
+                        router.push('/home')
+                        // 存储用户信息
+                        store.commit('changeUserInfo', res.data.data)
+                    } else {
+                        ElMessage.error('用户名或者密码错误')
+                    }
+                })
             }
-            // 校验成功
-            localStorage.setItem('token', 'jf')
-            router.push('/home')
         })
     }
 

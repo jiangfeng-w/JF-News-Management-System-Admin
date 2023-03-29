@@ -30,11 +30,11 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/login') {
         next()
     } else {
-        // 如果已登录，token错误，定位到 登录
         if (!localStorage.getItem('token')) {
+            // 没有token，跳转到登录
             next('/login')
         } else {
-            // token正确,但第一次加载
+            // 有token，但第一次加载
             if (!store.state.isGetterRouter) {
                 config()
                 next(to.fullPath)

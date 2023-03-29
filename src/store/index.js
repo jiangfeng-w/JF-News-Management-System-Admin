@@ -7,6 +7,8 @@ export default createStore({
         isGetterRouter: false,
         // 是否折叠
         isCollapse: false,
+        // 用户信息
+        userInfo: {},
     },
     getters: {},
     mutations: {
@@ -16,12 +18,22 @@ export default createStore({
         changeCollapse(state) {
             state.isCollapse = !state.isCollapse
         },
+        changeUserInfo(state, value) {
+            state.userInfo = {
+                ...state.userInfo,
+                ...value,
+            }
+        },
+        // 退出清除用户信息
+        clearUserInfo(state) {
+            state.userInfo = {}
+        },
     },
     actions: {},
     modules: {},
     plugins: [
         createPersistedState({
-            paths: ['isCollapse'], //控制是否持久化
+            paths: ['isCollapse', 'userInfo'], //控制是否持久化
         }),
     ],
 })

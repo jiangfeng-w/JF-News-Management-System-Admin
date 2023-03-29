@@ -27,13 +27,18 @@
                 <!-- 下拉菜单 -->
                 <el-dropdown>
                     <span class="el-dropdown-link">
-                        欢迎您，admin
-                        <el-avatar :src="avatar" />
+                        欢迎您，{{ store.state.userInfo.username }}
+                        <el-avatar :src="store.state.userInfo.avatar" />
                     </span>
                     <template #dropdown>
                         <el-dropdown-menu>
                             <el-dropdown-item @click="goCenter">个人中心</el-dropdown-item>
-                            <el-dropdown-item @click="logOut">退出登录</el-dropdown-item>
+                            <el-dropdown-item
+                                @click="logOut"
+                                divided
+                            >
+                                退出登录
+                            </el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
@@ -46,7 +51,6 @@
 
 <script setup>
     import { Fold, Expand, ArrowDown } from '@element-plus/icons-vue'
-    import avatar from '@/assets/avator.png'
     import { useStore } from 'vuex'
     import { useRouter } from 'vue-router'
 
@@ -62,8 +66,9 @@
     }
     // 退出登录
     const logOut = () => {
-        localStorage.removeItem('token')
         router.push('/login')
+        localStorage.removeItem('token')
+        store.commit('clearUserInfo')
     }
 </script>
 

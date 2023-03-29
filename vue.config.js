@@ -6,6 +6,7 @@ const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
 module.exports = defineConfig({
     transpileDependencies: true,
     lintOnSave: false, // 关闭语法检查
+    // element自动引入
     configureWebpack: {
         plugins: [
             AutoImport({
@@ -15,5 +16,14 @@ module.exports = defineConfig({
                 resolvers: [ElementPlusResolver()],
             }),
         ],
+    },
+    // 跨域
+    devServer: {
+        proxy: {
+            '/admin': {
+                target: 'http://localhost:3000',
+                changeOrigin: true,
+            },
+        },
     },
 })
