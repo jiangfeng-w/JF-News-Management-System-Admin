@@ -3,7 +3,5 @@
  * @公众号: 大前端私房菜
 -->
 <template>
-    <div>
-        useradd
-    </div>
+    <div>useradd</div>
 </template>

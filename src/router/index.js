@@ -1,6 +1,8 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import RouteConfig from './RouteConfig'
 import store from '@/store/index'
+import axios from 'axios'
+import { ElMessage } from 'element-plus'
 
 const routes = [
     {
@@ -39,7 +41,18 @@ router.beforeEach((to, from, next) => {
                 config()
                 next(to.fullPath)
             } else {
-                next()
+                // 检测token是否过期
+                const token = localStorage.getItem('token')
+                axios
+                    .get('/admin/user/checkToken')
+                    .then(res => {
+                        if (res.status === 200) {
+                            next()
+                        }
+                    })
+                    .catch(err => {
+                        next('/login')
+                    })
             }
         }
     }

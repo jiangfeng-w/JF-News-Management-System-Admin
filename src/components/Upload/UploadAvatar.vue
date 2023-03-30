@@ -24,7 +24,7 @@
 
 <script setup>
     import { Plus } from '@element-plus/icons-vue'
-    import { defineEmits, defineProps } from 'vue'
+    // import { defineEmits, defineProps } from 'vue'
 
     // 接收porps
     const props = defineProps({
@@ -43,7 +43,7 @@
 </script>
 
 <style scoped lang="scss">
-    ::v-deep .avatar-uploader .el-upload {
+    :deep(.avatar-uploader) .el-upload {
         border: 1px dashed var(--el-border-color);
         border-radius: 6px;
         cursor: pointer;
@@ -52,11 +52,11 @@
         transition: var(--el-transition-duration-fast);
     }
 
-    ::v-deep .avatar-uploader .el-upload:hover {
+    :deep(.avatar-uploader) .el-upload:hover {
         border-color: var(--el-color-primary);
     }
 
-    ::v-deep .el-icon.avatar-uploader-icon {
+    .el-icon.avatar-uploader-icon {
         font-size: 28px;
         color: #8c939d;
         width: 178px;
