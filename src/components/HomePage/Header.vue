@@ -44,8 +44,6 @@
                 </el-dropdown>
             </div>
         </div>
-
-        <div class="bottom"></div>
     </el-header>
 </template>
 
@@ -77,7 +75,7 @@
         display: flex;
         flex-direction: column;
         padding: 0;
-        height: 80px;
+        height: 50px;
         .top {
             display: flex;
             justify-content: space-between;
@@ -87,18 +85,16 @@
             padding: 0 20px;
             box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
             // background-color: aqua;
-            .left {
-            }
             .right {
                 display: flex;
             }
         }
-        .bottom {
-            // background-color: #bfa;
-            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 12%), 0 0 3px 0 rgb(0 0 0 / 4%);
-            height: 30px;
-            padding: 0 20px;
-        }
+        // .bottom {
+        //     // background-color: #bfa;
+        //     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 12%), 0 0 3px 0 rgb(0 0 0 / 4%);
+        //     height: 30px;
+        //     padding: 0 20px;
+        // }
     }
     .el-dropdown-link {
         cursor: pointer;

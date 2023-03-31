@@ -76,16 +76,19 @@
         // 表单校验
         loginFormRef.value.validate(isValid => {
             if (isValid) {
-                axios.post('/admin/user/login', loginForm).then(res => {
-                    // console.log(res.data)
-                    if (res.data.ActionType === 'OK') {
-                        router.push('/home')
-                        // 存储用户信息
-                        store.commit('changeUserInfo', res.data.data)
-                    } else {
-                        ElMessage.error('用户名或者密码错误')
-                    }
-                })
+                axios
+                    .post('/admin/user/login', loginForm)
+                    .then(res => {
+                        // console.log(res.data)
+                        if (res.status === 200) {
+                            router.push('/home')
+                            // 存储用户信息
+                            store.commit('changeUserInfo', res.data.data)
+                        }
+                    })
+                    .catch(err => {
+                        ElMessage.error(err.response.data.error)
+                    })
             }
         })
     }
