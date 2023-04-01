@@ -230,6 +230,7 @@
                         const res = await axios.put(`/admin/user/list/${editUserForm.id}`, editUserForm)
                         if (res.status === 200) {
                             ElMessage.success(res.data.message)
+                            getFormData()
                             dialogVisible.value = false
                         }
                     } catch (err) {

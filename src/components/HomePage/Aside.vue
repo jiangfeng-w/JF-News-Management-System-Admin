@@ -30,7 +30,10 @@
             </el-menu-item> -->
 
             <!-- 用户管理 -->
-            <el-sub-menu index="/user-manage">
+            <el-sub-menu
+                index="/user-manage"
+                v-if="store.state.userInfo.role === 1"
+            >
                 <template #title>
                     <el-icon><UserFilled /></el-icon>
                     <span>用户管理</span>

@@ -18,10 +18,12 @@ const routes = [
     {
         path: '/user-manage/adduser',
         component: UserAdd,
+        needAuth: true,
     },
     {
         path: '/user-manage/userlist',
         component: UserList,
+        needAuth: true,
     },
 
     {

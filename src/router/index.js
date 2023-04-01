@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import RouteConfig from './RouteConfig'
-import store from '@/store/index'
 import axios from 'axios'
+import store from '../store/index'
 import { ElMessage } from 'element-plus'
 
 const routes = [
@@ -38,6 +38,9 @@ router.beforeEach((to, from, next) => {
         } else {
             // 有token，但第一次加载
             if (!store.state.isGetterRouter) {
+                // 移除根路由
+                router.removeRoute('homepage')
+                // 加载路由
                 config()
                 next(to.fullPath)
             } else {
@@ -57,9 +60,26 @@ router.beforeEach((to, from, next) => {
         }
     }
 })
+
+const checkPermission = i => {
+    if (i.needAuth) {
+        return store.state.userInfo.role === 1
+    }
+    return true
+}
+
 const config = () => {
+    //
+    if (!router.hasRoute('homepage')) {
+        router.addRoute({
+            path: '/homepage',
+            name: 'homepage',
+            component: () => import('@/views/HomePage.vue'),
+        })
+    }
     RouteConfig.forEach(i => {
-        router.addRoute('homepage', i)
+        // 根据权限加载路由
+        checkPermission(i) && router.addRoute('homepage', i)
     })
     store.commit('changeGetterRouter', true)
 }

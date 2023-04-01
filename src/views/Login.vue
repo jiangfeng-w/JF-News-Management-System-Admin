@@ -84,6 +84,7 @@
                             router.push('/home')
                             // 存储用户信息
                             store.commit('changeUserInfo', res.data.data)
+                            store.commit('changeGetterRouter', false)
                         }
                     })
                     .catch(err => {
