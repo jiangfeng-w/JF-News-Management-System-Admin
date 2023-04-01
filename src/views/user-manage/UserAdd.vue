@@ -206,7 +206,7 @@
                         ElMessage.success(res.data.message)
                     }
                 } catch (err) {
-                    ElMessage.error(err.response.data.error)
+                    ElMessage.error(err.response.data.message)
                 }
             } else {
                 ElMessage.error('请正确填写信息后提交')

@@ -43,7 +43,7 @@
     const welcomeText = computed(() => (new Date().getHours() < 12 ? '要开心每一天.' : '喝杯咖啡提提神吧.'))
 </script>
 
-<style scope>
+<style lang="scss" scope>
     .box-card {
         margin-top: 50px;
     }

@@ -58,8 +58,8 @@
 
     //登录表单
     const loginForm = reactive({
-        username: 'admin',
-        password: 'admin',
+        username: '',
+        password: '',
     })
     // 表单绑定的响应式对象
     const loginFormRef = ref()
@@ -87,7 +87,7 @@
                         }
                     })
                     .catch(err => {
-                        ElMessage.error(err.response.data.error)
+                        ElMessage.error(err.response.data.message)
                     })
             }
         })

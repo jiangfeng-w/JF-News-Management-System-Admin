@@ -195,6 +195,7 @@
     import { ref, reactive, toRaw } from 'vue'
     import upload from '@/util/upload'
     import axios from 'axios'
+    import { useRouter } from 'vue-router'
     const store = useStore()
     let { username, gender, introduction, avatar: oldAvatar } = store.state.userInfo
     const userFormRef = ref()
@@ -234,22 +235,25 @@
     // 提交表单
     const submitForm = () => {
         userFormRef.value.validate(async isValid => {
-            // 如果验证通过且表单改变了
-            if (isValid && !(JSON.stringify(initUserForm) === JSON.stringify(userForm))) {
-                try {
-                    const res = await upload('/admin/user/upload', userForm)
-                    if (res.status === 200) {
-                        store.commit('changeUserInfo', res.data.data)
+            // 表单改变了
+            if (!(JSON.stringify(initUserForm) === JSON.stringify(userForm))) {
+                // 验证通过
+                if (isValid) {
+                    try {
+                        const res = await upload('/admin/user/upload', userForm)
+                        if (res.status === 200) {
+                            store.commit('changeUserInfo', res.data.data)
 
-                        // 重新给表单赋值
-                        userForm.avatar = ''
-                        userForm.oldAvatar = store.state.userInfo.avatar
-                        initUserForm = JSON.parse(JSON.stringify(toRaw(userForm)))
-                        // 通知
-                        ElMessage.success(res.data.message)
+                            // 重新给表单赋值
+                            userForm.avatar = ''
+                            userForm.oldAvatar = store.state.userInfo.avatar
+                            initUserForm = JSON.parse(JSON.stringify(toRaw(userForm)))
+                            // 通知
+                            ElMessage.success(res.data.message)
+                        }
+                    } catch (err) {
+                        ElMessage.error(err.response.data.message)
                     }
-                } catch (err) {
-                    ElMessage.error(err.response.data.error)
                 }
             } else {
                 ElMessage.info('请修改信息后提交')
@@ -262,7 +266,6 @@
     const userPasswordRef = ref()
     // 修改密码的表单
     const userPassword = reactive({
-        username,
         oldPassword: '',
         newPassword: '',
         checkPass: '',
@@ -316,18 +319,23 @@
         ],
     })
 
+    // 生成router实例
+    const router = useRouter()
     // 提交修改密码
     const submitPass = () => {
         userPasswordRef.value.validate(async isValid => {
             if (isValid) {
-                console.log(userPassword)
+                if (userPassword.oldPassword === userPassword.newPassword) {
+                    return ElMessage.info('新密码不能和原密码相同')
+                }
                 try {
                     const res = await axios.post('/admin/user/changePass', userPassword)
                     if (res.status === 200) {
-                        ElMessage.success(res.data.message)
+                        ElMessage.success(`${res.data.message}，请重新登录`)
+                        router.push('/login')
                     }
                 } catch (err) {
-                    ElMessage.error(err.response.data.error)
+                    ElMessage.error(err.response.data.message)
                 }
             } else {
                 ElMessage.info('请正确填写后提交')
@@ -342,7 +350,7 @@
     }
 </script>
 
-<style scope lang="scss">
+<style lang="scss" scope>
     .el-row {
         margin-top: 20px;
         .userInfo {
