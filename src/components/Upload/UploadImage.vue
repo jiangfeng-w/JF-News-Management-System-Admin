@@ -11,6 +11,7 @@
                 v-if="avatar"
                 :src="avatar"
                 class="avatar"
+                :style="{ '--width': max_width, '--height': max_height }"
             />
             <el-icon
                 v-else
@@ -24,11 +25,19 @@
 
 <script setup>
     import { Plus } from '@element-plus/icons-vue'
-    // import { defineEmits, defineProps } from 'vue'
+    import { defineEmits, defineProps } from 'vue'
 
     // 接收porps
     const props = defineProps({
         avatar: String,
+        max_width: {
+            type: String,
+            default: '178px',
+        },
+        max_height: {
+            type: String,
+            default: '178px',
+        },
     })
     // 注册emit
     const emit = defineEmits(['fileChange'])
@@ -42,7 +51,7 @@
     }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
     :deep(.avatar-uploader) .el-upload {
         border: 1px dashed var(--el-border-color);
         border-radius: 6px;
@@ -64,8 +73,8 @@
         text-align: center;
     }
     .avatar-uploader .avatar {
-        width: 178px;
-        height: 178px;
+        max-width: var(--width);
+        max-height: var(--height);
         display: block;
     }
 </style>

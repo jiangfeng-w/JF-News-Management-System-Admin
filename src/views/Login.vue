@@ -23,6 +23,7 @@
                         v-model="loginForm.username"
                         :prefix-icon="User"
                         placeholder="请输入用户名"
+                        @keyup.enter="submitForm()"
                     />
                 </el-form-item>
                 <!-- 密码 -->
@@ -32,6 +33,7 @@
                         type="password"
                         :prefix-icon="Lock"
                         placeholder="请输入密码"
+                        @keyup.enter="submitForm()"
                     />
                 </el-form-item>
                 <!-- 按钮 -->
@@ -179,7 +181,7 @@
     }
 </script>
 
-<style lang="scss" scope>
+<style lang="scss" scoped>
     .login {
         border-radius: 5px;
         width: 400px;

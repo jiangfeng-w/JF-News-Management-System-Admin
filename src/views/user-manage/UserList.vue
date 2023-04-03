@@ -244,4 +244,8 @@
     }
 </script>
 
-<style lang="scss" scope></style>
+<style lang="scss" scoped>
+    .el-card {
+        margin-top: 20px;
+    }
+</style>

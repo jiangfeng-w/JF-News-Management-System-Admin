@@ -66,8 +66,18 @@
                     prop="role"
                 >
                     <el-radio-group v-model="addUserForm.role">
-                        <el-radio :label="1">管理员</el-radio>
-                        <el-radio :label="2">编辑</el-radio>
+                        <el-radio
+                            :label="1"
+                            border
+                        >
+                            管理员
+                        </el-radio>
+                        <el-radio
+                            :label="2"
+                            border
+                        >
+                            编辑
+                        </el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <!-- 性别 -->
@@ -76,8 +86,18 @@
                     prop="gender"
                 >
                     <el-radio-group v-model="addUserForm.gender">
-                        <el-radio :label="1">男</el-radio>
-                        <el-radio :label="2">女</el-radio>
+                        <el-radio
+                            :label="1"
+                            border
+                        >
+                            男
+                        </el-radio>
+                        <el-radio
+                            :label="2"
+                            border
+                        >
+                            女
+                        </el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <!-- 头像 -->
@@ -101,7 +121,7 @@
                             添加
                         </el-button>
                     </el-form-item>
-                    <!-- 提交按钮 -->
+                    <!-- 重置按钮 -->
                     <el-form-item class="submit">
                         <el-button
                             type="info"
@@ -122,6 +142,7 @@
     import { ref, reactive, toRaw } from 'vue'
     import upload from '../../util/upload'
     import { ElMessage } from 'element-plus'
+    import UploadAvatar from '@/components/Upload/UploadImage.vue'
 
     const addUserFormRef = ref()
     // 表单数据
@@ -215,7 +236,7 @@
     }
 </script>
 
-<style scope lang="scss">
+<style lang="scss" scoped>
     .el-card {
         margin-top: 20px;
     }

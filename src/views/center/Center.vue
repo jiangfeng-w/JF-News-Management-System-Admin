@@ -77,8 +77,18 @@
                                     prop="gender"
                                 >
                                     <el-radio-group v-model="userForm.gender">
-                                        <el-radio :label="1">男</el-radio>
-                                        <el-radio :label="2">女</el-radio>
+                                        <el-radio
+                                            :label="1"
+                                            border
+                                        >
+                                            男
+                                        </el-radio>
+                                        <el-radio
+                                            :label="2"
+                                            border
+                                        >
+                                            女
+                                        </el-radio>
                                     </el-radio-group>
                                 </el-form-item>
                                 <!-- 头像 -->
@@ -196,6 +206,7 @@
     import upload from '@/util/upload'
     import axios from 'axios'
     import { useRouter } from 'vue-router'
+    import UploadAvatar from '@/components/Upload/UploadImage.vue'
     const store = useStore()
     let { username, gender, introduction, avatar: oldAvatar } = store.state.userInfo
     const userFormRef = ref()
@@ -350,9 +361,11 @@
     }
 </script>
 
-<style lang="scss" scope>
-    .el-row {
+<style lang="scss" scoped>
+    .el-card {
         margin-top: 20px;
+    }
+    .el-row {
         .userInfo {
             text-align: center;
             .card-header {

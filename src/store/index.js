@@ -33,7 +33,8 @@ export default createStore({
     modules: {},
     plugins: [
         createPersistedState({
-            paths: ['isCollapse', 'userInfo'], //控制是否持久化
+            // userInfo持久化，防止刷新页面用户数据丢失
+            paths: ['userInfo'], //控制是否持久化
         }),
     ],
 })
