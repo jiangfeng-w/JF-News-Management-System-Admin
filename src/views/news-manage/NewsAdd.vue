@@ -23,7 +23,7 @@
             >
                 <!-- 新闻标题 -->
                 <el-form-item
-                    label="新闻"
+                    label="新闻标题"
                     prop="title"
                 >
                     <el-input v-model="addNewsForm.title" />
@@ -40,7 +40,7 @@
                 </el-form-item>
                 <!-- 新闻分类 -->
                 <el-form-item
-                    label="新闻内容"
+                    label="新闻分类"
                     prop="category"
                 >
                     <el-radio-group v-model="addNewsForm.category">
@@ -146,12 +146,14 @@
     }
     // 清空表单
     const resetForm = () => {
+        // 如果不是点击按钮触发的这个函数，则不会有bubbles，即冒泡事件，所以需要判断
         if (event.bubbles) {
             loseFocus()
         }
         for (const i in initAddNewsForm) {
             addNewsForm[i] = initAddNewsForm[i]
         }
+        addNewsFormRef.value.resetFields()
     }
 
     // 实例router对象
@@ -164,7 +166,8 @@
                 try {
                     const res = await upload('/admin/news/add', addNewsForm)
                     if (res.status === 201) {
-                        router.push('/news-manage/newslist')
+                        // router.push('/news-manage/newslist')
+                        resetForm()
 
                         // 通知
                         ElMessage.success(res.data.message)
@@ -185,7 +188,7 @@
         display: flex;
         justify-content: flex-start;
         .el-form-item {
-            width: 100px;
+            width: 110px;
         }
     }
 </style>

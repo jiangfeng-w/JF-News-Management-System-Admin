@@ -209,12 +209,14 @@
     }
     // 清空表单
     const resetForm = () => {
+        // 如果不是点击按钮触发的这个函数，则不会有bubbles，即冒泡事件，所以需要判断
         if (event.bubbles) {
             loseFocus()
         }
         for (const i in initAddUserForm) {
             addUserForm[i] = initAddUserForm[i]
         }
+        addUserFormRef.value.resetFields()
     }
 
     // 提交表单
@@ -235,8 +237,6 @@
                 } catch (err) {
                     ElMessage.error(err.response.data.message)
                 }
-            } else {
-                ElMessage.error('请正确填写信息后提交')
             }
         })
     }
@@ -250,7 +250,7 @@
         display: flex;
         justify-content: flex-start;
         .el-form-item {
-            width: 100px;
+            width: 110px;
         }
     }
 </style>
