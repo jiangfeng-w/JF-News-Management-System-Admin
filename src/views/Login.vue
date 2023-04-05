@@ -57,6 +57,7 @@
     import { User, Lock } from '@element-plus/icons-vue'
     import axios from 'axios'
     import { useStore } from 'vuex'
+    import loseFocus from '@/util/loseFocus.js'
 
     //登录表单
     const loginForm = reactive({
@@ -75,6 +76,7 @@
     const store = useStore()
     // 提交表单
     const submitForm = () => {
+        loseFocus()
         // 表单校验
         loginFormRef.value.validate(isValid => {
             if (isValid) {

@@ -143,6 +143,7 @@
     import upload from '../../util/upload'
     import { ElMessage } from 'element-plus'
     import UploadAvatar from '@/components/Upload/UploadImage.vue'
+    import loseFocus from '@/util/loseFocus.js'
 
     const addUserFormRef = ref()
     // 表单数据
@@ -208,6 +209,9 @@
     }
     // 清空表单
     const resetForm = () => {
+        if (event.bubbles) {
+            loseFocus()
+        }
         for (const i in initAddUserForm) {
             addUserForm[i] = initAddUserForm[i]
         }
@@ -215,11 +219,13 @@
 
     // 提交表单
     const submitForm = () => {
+        loseFocus()
         addUserFormRef.value.validate(async isValid => {
             // 如果验证通过
             if (isValid) {
                 try {
                     const res = await upload('/admin/user/add', addUserForm)
+                    // console.log(res.status === 201)
                     if (res.status === 201) {
                         // 清空表单
                         resetForm()

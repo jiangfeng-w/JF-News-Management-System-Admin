@@ -1,7 +1,3 @@
-<!--
- * @作者: kerwin
- * @公众号: 大前端私房菜
--->
 <template>
     <div>
         <!-- 面包屑导航 -->
@@ -114,6 +110,7 @@
     import RichText from '@/components/RichText/RichText.vue'
     import UploadImage from '@/components/Upload/UploadImage.vue'
     import { useRouter } from 'vue-router'
+    import loseFocus from '@/util/loseFocus.js'
 
     const addNewsFormRef = ref()
     // 新闻表单
@@ -149,6 +146,9 @@
     }
     // 清空表单
     const resetForm = () => {
+        if (event.bubbles) {
+            loseFocus()
+        }
         for (const i in initAddNewsForm) {
             addNewsForm[i] = initAddNewsForm[i]
         }
@@ -158,6 +158,7 @@
     const router = useRouter()
     // 提交表单
     const submitForm = () => {
+        loseFocus()
         addNewsFormRef.value.validate(async isValid => {
             if (isValid) {
                 try {

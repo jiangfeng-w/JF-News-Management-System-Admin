@@ -7,10 +7,10 @@
         margin: 0;
         padding: 0;
     }
-    ::-webkit-scrollbar {
-        width: 0;
-        height: 0;
-    }
+    // ::-webkit-scrollbar {
+    //     width: 0;
+    //     height: 0;
+    // }
     html,
     body,
     #app {

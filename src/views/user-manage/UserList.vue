@@ -41,6 +41,8 @@
                         <el-button
                             type="primary"
                             size="small"
+                            plain
+                            :icon="Edit"
                             @click="editButton(scope.row)"
                         >
                             编辑
@@ -50,12 +52,15 @@
                             confirm-button-text="确认"
                             cancel-button-text="取消"
                             title="确认删除此用户?"
-                            @confirm="deleteButton(scope.row)"
+                            @confirm="deleteConfirm(scope.row)"
                         >
                             <template #reference>
                                 <el-button
                                     type="danger"
                                     size="small"
+                                    plain
+                                    :icon="Delete"
+                                    @click="loseFocus()"
                                 >
                                     删除
                                 </el-button>
@@ -71,6 +76,7 @@
             v-model="dialogVisible"
             title="编辑用户"
             width="50%"
+            @closed="closeDialog()"
         >
             <el-form
                 ref="editUserFormRef"
@@ -143,34 +149,43 @@
 <script setup>
     import { reactive, ref, onMounted, toRaw } from 'vue'
     import axios from 'axios'
+    import { Edit, Delete } from '@element-plus/icons-vue'
+    import loseFocus from '@/util/loseFocus.js'
 
-    const tableData = reactive([])
+    let tableData = reactive([])
     // 获取用户列表数据
-    const getFormData = async () => {
+    const getTableData = async () => {
         const res = await axios.get('/admin/user/list')
-        // tableData.push(...res.data.data)
-        Object.assign(tableData, res.data.data)
-        // console.log(tableData)
+
+        // const newTableData = []
+        // for (const user of res.data.data) {
+        //     newTableData.push(user)
+        // }
+        // 使用解构赋值和splice方法替换tableData中的元素
+        tableData.splice(0, tableData.length, ...res.data.data)
     }
     onMounted(() => {
-        getFormData()
+        getTableData()
     })
-    // 删除按钮
-    const deleteButton = async data => {
+    // 确认删除
+    const deleteConfirm = async data => {
         // console.log(data)
         try {
-            const res = await axios.delete(`/admin/user/list/${data.id}`)
+            const res = await axios.put(`/admin/user/list/${data.id}`, {
+                avatar: data.avatar,
+            })
             if (res.status === 200) {
-                ElMessage.success(res.data.message)
+                // ElMessage.success(res.data.message)
                 // 重新获取数据
-                getFormData()
+                getTableData()
             }
         } catch (err) {
             ElMessage.error(err.response.data.message)
+            getTableData()
         }
     }
 
-    // 对话框是否可见
+    // 预览对话框是否可见
     const dialogVisible = ref(false)
     // 编辑用户表单
     const editUserFormRef = ref()
@@ -180,7 +195,8 @@
         introduction: '',
         role: null,
     })
-    let inntEditUserForm = null
+    const resetForm = JSON.parse(JSON.stringify(toRaw(editUserForm)))
+    let initEditUserForm = null
     // 校验规则
     const editUserFormFules = reactive({
         username: [
@@ -208,6 +224,8 @@
 
     // 编辑按钮
     const editButton = async data => {
+        // 让按钮失焦
+        loseFocus()
         // console.log(data)
         dialogVisible.value = true
         // 用id向后端请求用户数据，避免脏数据
@@ -215,14 +233,14 @@
         // console.log(res.data.data)
         Object.assign(editUserForm, res.data.data)
         // 保存原始数据
-        inntEditUserForm = JSON.parse(JSON.stringify(toRaw(editUserForm)))
+        initEditUserForm = JSON.parse(JSON.stringify(toRaw(editUserForm)))
     }
 
     // 确认提交
     const editConfirm = () => {
         editUserFormRef.value.validate(async isValid => {
             // 表单数据改变了
-            if (!(JSON.stringify(inntEditUserForm) === JSON.stringify(editUserForm))) {
+            if (!(JSON.stringify(initEditUserForm) === JSON.stringify(editUserForm))) {
                 // 验证通过
                 if (isValid) {
                     // console.log(editUserForm)
@@ -230,17 +248,24 @@
                         const res = await axios.put(`/admin/user/list/${editUserForm.id}`, editUserForm)
                         if (res.status === 200) {
                             ElMessage.success(res.data.message)
-                            getFormData()
+                            getTableData()
                             dialogVisible.value = false
                         }
                     } catch (err) {
                         ElMessage.error(err.response.data.message)
+                        getTableData()
                     }
                 }
             } else {
                 ElMessage.info('请修改信息后提交')
             }
         })
+    }
+    // 关闭对话框
+    const closeDialog = () => {
+        for (const i in editUserForm) {
+            editUserForm[i] = resetForm[i]
+        }
     }
 </script>
 

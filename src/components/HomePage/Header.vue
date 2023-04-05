@@ -105,4 +105,7 @@
             margin-left: 15px;
         }
     }
+    :deep(.el-dropdown) {
+        z-index: 999999999;
+    }
 </style>

@@ -98,7 +98,12 @@
     }
 </script>
 
-<style lang="scss" scope>
+<style lang="scss" scoped>
+    // 隐藏滚动条
+    ::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    }
     .el-aside {
         background-color: #304156;
         transition: 0.3s;
@@ -132,14 +137,14 @@
             width: 20px;
         }
     }
-    .el-sub-menu .el-menu-item {
+    :deep(.el-sub-menu) .el-menu-item {
         background-color: #1f2d3d;
     }
-    .el-menu-item:hover,
-    .el-sub-menu__title:hover {
+    :deep(.el-menu-item):hover,
+    :deep(.el-sub-menu__title):hover {
         background-color: #2d3d52;
     }
-    .el-sub-menu .el-menu-item:hover {
+    :deep(.el-sub-menu) .el-menu-item:hover {
         background-color: #001528;
     }
 </style>

@@ -30,6 +30,11 @@
         }
     )
 </script>
+<style>
+    #myeditor {
+        z-index: 10;
+    }
+</style>
 <!-- <script>
     import E from 'wangeditor'
     export default {

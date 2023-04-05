@@ -207,6 +207,7 @@
     import axios from 'axios'
     import { useRouter } from 'vue-router'
     import UploadAvatar from '@/components/Upload/UploadImage.vue'
+    import loseFocus from '@/util/loseFocus.js'
     const store = useStore()
     let { username, gender, introduction, avatar: oldAvatar } = store.state.userInfo
     const userFormRef = ref()
@@ -238,6 +239,9 @@
     }
     // 重置表单
     const resetForm = () => {
+        if (event.bubbles) {
+            loseFocus()
+        }
         for (const i in initUserForm) {
             userForm[i] = initUserForm[i]
         }
@@ -245,6 +249,7 @@
     }
     // 提交表单
     const submitForm = () => {
+        loseFocus()
         userFormRef.value.validate(async isValid => {
             // 表单改变了
             if (!(JSON.stringify(initUserForm) === JSON.stringify(userForm))) {
@@ -334,6 +339,7 @@
     const router = useRouter()
     // 提交修改密码
     const submitPass = () => {
+        loseFocus()
         userPasswordRef.value.validate(async isValid => {
             if (isValid) {
                 if (userPassword.oldPassword === userPassword.newPassword) {
@@ -354,6 +360,9 @@
         })
     }
     const resetPass = () => {
+        if (event.bubbles) {
+            loseFocus()
+        }
         for (const i in userPassword) {
             userPassword[i] = ''
         }
