@@ -115,6 +115,7 @@
         box-shadow: 2px 0 6px rgb(0 21 41 / 35%);
     }
     .siteTitle {
+        cursor: pointer;
         font-weight: bold;
         font-size: 14px;
         text-align: center;

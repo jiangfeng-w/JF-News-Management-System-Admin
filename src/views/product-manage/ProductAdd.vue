@@ -33,7 +33,11 @@
                     label="产品简述"
                     prop="product_brief"
                 >
-                    <el-input v-model="addProductForm.product_brief" />
+                    <el-input
+                        v-model="addProductForm.product_brief"
+                        type="textarea"
+                        autosize
+                    />
                 </el-form-item>
                 <!-- 产品详述 -->
                 <el-form-item

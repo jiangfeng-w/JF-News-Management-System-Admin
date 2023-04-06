@@ -269,6 +269,7 @@
         }
     }
 
+    //#region 预览新闻
     // 预览新闻对话框
     const previewDialog = ref(false)
     // 对话框数据
@@ -279,6 +280,7 @@
         previewData.value = item
         previewDialog.value = true
     }
+    //#endregion
 
     const editNewsFormRef = ref()
     // 编辑新闻对话框
