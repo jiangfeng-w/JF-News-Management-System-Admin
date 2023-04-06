@@ -20,48 +20,86 @@
                     <span>公司产品</span>
                 </div>
             </template>
-            <el-carousel
-                :interval="4000"
-                type="card"
-                height="200px"
+
+            <!-- 轮播图 -->
+            <swiper
+                v-if="listData.length"
+                class="swiper"
+                :modules="modules"
+                :slides-per-view="3"
+                :loop="true"
+                :navigation="true"
+                :pagination="{ clickable: true }"
+                :autoplay="{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                }"
             >
-                <el-carousel-item
-                    v-for="item in 6"
-                    :key="item"
+                <swiper-slide
+                    class="slide"
+                    v-for="(item, index) in listData"
+                    :key="item.id"
                 >
-                    <h3>{{ item }}</h3>
-                </el-carousel-item>
-            </el-carousel>
+                    <img
+                        :src="item.product_image"
+                        alt=""
+                    />
+                </swiper-slide>
+            </swiper>
         </el-card>
     </div>
 </template>
 
 <script setup>
     import { useStore } from 'vuex'
-    import { computed } from 'vue'
+    import { computed, ref, onMounted } from 'vue'
+    import axios from 'axios'
+    import { Pagination, Navigation, FreeMode, Autoplay, Zoom } from 'swiper'
+    import { Swiper, SwiperSlide } from 'swiper/vue'
+    import 'swiper/css'
+    import 'swiper/css/pagination'
+    import 'swiper/css/navigation'
+
     const store = useStore()
     const welcomeText = computed(() => (new Date().getHours() < 12 ? '要开心每一天.' : '喝杯咖啡提提神吧.'))
+
+    //#region 数据
+    const listData = ref([])
+    onMounted(() => {
+        getData()
+    })
+    const getData = async () => {
+        const res = await axios.get('/admin/product/list')
+        listData.value = res.data.data
+        // console.log(listData)
+    }
+    //#endregion
+
+    //#region swiper配置
+    const modules = ref([Pagination, Navigation, FreeMode, Autoplay, Zoom])
+    //#endregion
 </script>
 
 <style lang="scss" scoped>
     .box-card {
         margin-top: 50px;
     }
+</style>
 
-    .el-carousel__item h3 {
-        color: #475669;
-        font-size: 14px;
-        opacity: 0.75;
-        line-height: 200px;
-        margin: 0;
-        text-align: center;
-    }
+<style lang="scss" scoped>
+    .swiper {
+        // height: 40vh;
+        height: 300px;
+        .slide {
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
 
-    .el-carousel__item:nth-child(2n) {
-        background-color: #99a9bf;
-    }
-
-    .el-carousel__item:nth-child(2n + 1) {
-        background-color: #d3dce6;
+            img {
+                height: 100%;
+                padding: 0;
+                margin: 0;
+            }
+        }
     }
 </style>
